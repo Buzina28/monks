@@ -8,7 +8,1048 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
+      --bg: #0a0a0a;<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diretor — Portfolio</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
       --bg: #0a0a0a;
+      --sidebar-bg: #0f0f0f;
+      --text: #ffffff;
+      --muted: #666;
+      --border: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: #ffffff;
+      height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 44px 32px;
+      border-right: none;
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    /* Sombra do vídeo projetada na borda direita da sidebar */
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 70px;
+      height: 100%;
+      background: linear-gradient(to left,
+        rgba(0,0,0,0.28) 0%,
+        rgba(0,0,0,0.10) 40%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .sidebar-brand {
+      margin-bottom: 52px;
+    }
+    .sidebar-brand h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      line-height: 1.4;
+      color: #111;
+    }
+    .sidebar-brand p {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-top: 6px;
+    }
+
+    nav { flex: 1; }
+    nav ul { list-style: none; }
+    nav ul li { margin-bottom: 4px; }
+    nav ul li a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      padding: 9px 0;
+      display: block;
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 50%; transform: translateY(-50%);
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: #111;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    nav ul li a:hover { color: #555; }
+    nav ul li a.active { color: #111; font-weight: 600; }
+    nav ul li a.active::before { opacity: 1; }
+
+    .sidebar-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar-footer a {
+      font-size: 10px;
+      color: #aaa;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .sidebar-footer a:hover { color: #555; }
+    .sidebar-footer span {
+      font-size: 9px;
+      color: #ccc;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    /* ─── MOBILE TOGGLE ───────────────────────────── */
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 16px; left: 16px;
+      z-index: 200;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      color: #111;
+      width: 38px; height: 38px;
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* ─── MAIN ────────────────────────────────────── */
+    .main { margin-left: 240px; flex: 1; min-height: 100vh; }
+
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── SECTION HEADER ──────────────────────────── */
+    .section-header {
+      padding: 44px 50px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header h2 {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ─── SUB-TABS ────────────────────────────────── */
+    .subtabs {
+      display: flex;
+      gap: 0;
+    }
+    .subtab {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      padding: 10px 20px 12px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: inherit;
+    }
+    .subtab:hover { color: rgba(255,255,255,0.6); }
+    .subtab.active {
+      color: var(--text);
+      border-bottom-color: white;
+    }
+
+    /* ─── INSTAGRAM VERTICAL GRID ─────────────────── */
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 3px;
+      padding: 3px 0;
+    }
+    .ig-grid .video-card {
+      aspect-ratio: 9/16;
+    }
+
+    /* ═══════════════════════════════════════════════
+       HOME — SLIDESHOW
+    ═══════════════════════════════════════════════ */
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #050505;
+      touch-action: pan-y;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.08) 0%,
+        rgba(0,0,0,0.12) 40%,
+        rgba(0,0,0,0.6) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Play button */
+    .play-btn {
+      width: 72px; height: 72px;
+      border: 1.5px solid rgba(255,255,255,0.75);
+      border-radius: 50%;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s, border-color 0.25s;
+    }
+    .play-btn:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: white;
+      transform: scale(1.08);
+    }
+    .play-btn svg {
+      width: 22px; height: 22px;
+      fill: white;
+      margin-left: 5px;
+    }
+
+    /* Slide meta */
+    .slide-meta {
+      position: absolute;
+      bottom: 52px;
+      left: 50px;
+    }
+    .slide-meta .title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.6);
+      line-height: 1.2;
+    }
+    .slide-meta .category {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 3.5px;
+      margin-top: 7px;
+    }
+
+    /* Arrows */
+    .arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: white; cursor: pointer;
+      padding: 16px;
+      opacity: 0.35;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .arrow:hover { opacity: 0.85; }
+    .arrow.prev { left: 16px; }
+    .arrow.next { right: 16px; }
+    .arrow svg { width: 28px; height: 28px; stroke: white; fill: none; stroke-width: 1.8; }
+
+    /* Dots */
+    .dots {
+      position: absolute;
+      bottom: 26px;
+      right: 46px;
+      display: flex; gap: 7px;
+    }
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .dot.active {
+      background: white;
+      transform: scale(1.3);
+    }
+
+    /* Progress bar */
+    .slide-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.15);
+      width: 100%;
+    }
+    .slide-progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.55);
+      width: 0%;
+      transition: width linear;
+    }
+
+    /* ═══════════════════════════════════════════════
+       VIDEOS SECTION
+    ═══════════════════════════════════════════════ */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .video-card {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      cursor: pointer;
+      background: #111;
+    }
+    .video-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, opacity 0.35s;
+      display: block;
+    }
+    .video-card:hover img {
+      transform: scale(1.05);
+      opacity: 0.55;
+    }
+    .video-card-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-card:hover .video-card-overlay { opacity: 1; }
+    .vc-play {
+      width: 48px; height: 48px;
+      border: 1.5px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .vc-play svg { width: 16px; height: 16px; fill: white; margin-left: 3px; }
+    .video-card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 22px 18px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.82), transparent);
+    }
+    .video-card-info .vc-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .video-card-info .vc-cat {
+      font-size: 10px;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 3px;
+    }
+
+    .ig-card { cursor: pointer; }
+    .ig-fallback {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .ig-fallback svg { opacity: 0.35; }
+    .ig-fallback span {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .ig-card img.loaded + .ig-fallback { display: none; }
+    .ig-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      border-radius: 6px;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOTOS SECTION
+    ═══════════════════════════════════════════════ */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      padding: 3px 0;
+    }
+    .photo-item {
+      overflow: hidden;
+      cursor: pointer;
+      background: #111;
+    }
+    .photo-item img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, opacity 0.3s;
+    }
+    .photo-item:hover img {
+      transform: scale(1.06);
+      opacity: 0.65;
+    }
+
+    /* ═══════════════════════════════════════════════
+       QUEM SOMOS SECTION
+    ═══════════════════════════════════════════════ */
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 91px);
+    }
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-copy {
+      padding: 70px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-copy h2 {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+    .about-copy p {
+      font-size: 14px;
+      line-height: 1.95;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      border: 1px solid #2a2a2a;
+      padding: 7px 14px;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════════════
+       VIDEO MODAL
+    ═══════════════════════════════════════════════ */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.open { display: flex; }
+    .modal-box {
+      position: relative;
+      width: 88%;
+      max-width: 1050px;
+      aspect-ratio: 16/9;
+    }
+    .modal-box iframe {
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .modal-x {
+      position: absolute;
+      top: -38px; right: 0;
+      background: none; border: none;
+      color: white; font-size: 26px;
+      cursor: pointer; line-height: 1;
+      opacity: 0.6; transition: opacity 0.2s;
+    }
+    .modal-x:hover { opacity: 1; }
+
+    /* ═══════════════════════════════════════════════
+       LIGHTBOX
+    ═══════════════════════════════════════════════ */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.97);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+    }
+    .lb-x {
+      position: fixed;
+      top: 18px; right: 28px;
+      background: none; border: none;
+      color: white; font-size: 30px;
+      cursor: pointer; z-index: 501;
+      opacity: 0.55; transition: opacity 0.2s;
+    }
+    .lb-x:hover { opacity: 1; }
+    .lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: white; font-size: 44px;
+      cursor: pointer; padding: 20px;
+      z-index: 501; opacity: 0.35;
+      transition: opacity 0.2s; line-height: 1;
+    }
+    .lb-nav:hover { opacity: 0.85; }
+    .lb-prev { left: 8px; }
+    .lb-next { right: 8px; }
+
+    /* ─── RESPONSIVE — TABLET ────────────────────── */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .hamburger { display: flex; }
+      .about-wrap { grid-template-columns: 1fr; }
+      .about-photo { height: 340px; }
+      .slide-meta { left: 24px; }
+      .slide-meta .title { font-size: 20px; }
+      .section-header { padding: 32px 24px 0; }
+      .subtab { padding: 10px 14px 12px; font-size: 10px; }
+      .videos-grid { grid-template-columns: repeat(2, 1fr); }
+      .ig-grid { grid-template-columns: repeat(3, 1fr); }
+      .modal-box { width: 96%; }
+    }
+
+    /* ─── RESPONSIVE — MOBILE ─────────────────────── */
+    @media (max-width: 560px) {
+      .sidebar { width: 100%; padding: 32px 24px; }
+      .hamburger { top: 12px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
+
+      /* Slideshow */
+      .slide-meta { left: 16px; bottom: 70px; right: 16px; }
+      .slide-meta .title { font-size: 18px; }
+      .slide-meta .category { font-size: 9px; }
+      .play-btn { width: 58px; height: 58px; }
+      .dots { right: 16px; bottom: 20px; }
+      .arrow.prev { left: 4px; }
+      .arrow.next { right: 4px; }
+
+      /* Section header */
+      .section-header { padding: 24px 16px 0; }
+      .section-header h2 { margin-bottom: 16px; }
+      .subtabs { overflow-x: auto; }
+      .subtab { padding: 8px 12px 10px; white-space: nowrap; }
+
+      /* Grids */
+      .videos-grid { grid-template-columns: 1fr; gap: 2px; }
+      .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+
+      /* About */
+      .about-photo { height: 260px; }
+      .about-copy { padding: 32px 20px; }
+      .about-copy h2 { font-size: 28px; margin-bottom: 20px; }
+      .about-copy p { font-size: 13px; }
+      .about-tags { margin-top: 20px; }
+
+      /* Video modal — tela cheia no mobile */
+      .modal-box {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 16/9;
+        margin: 0;
+      }
+      .modal { padding: 0; align-items: center; }
+      .modal-x { top: -36px; font-size: 24px; }
+
+      /* Lightbox */
+      .lb-nav { font-size: 32px; padding: 12px; }
+    }
+
+    /* ─── RESPONSIVE — TELA MUITO PEQUENA ────────── */
+    @media (max-width: 380px) {
+      .ig-grid { grid-template-columns: 1fr 1fr; }
+      .about-copy h2 { font-size: 24px; }
+      .slide-meta .title { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hamburger (mobile) -->
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+
+<!-- ─── SIDEBAR ───────────────────────────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:100%;max-width:160px;display:block;margin-bottom:6px;filter:brightness(0);">
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#" class="active" onclick="nav('home',this);return false;">Home</a></li>
+      <li><a href="#" onclick="nav('videos',this);return false;">Vídeos</a></li>
+      <li><a href="#" onclick="nav('about',this);return false;">Quem Somos</a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="#">Contato</a>
+  </div>
+</aside>
+
+<!-- ─── MAIN ──────────────────────────────────────── -->
+<main class="main">
+
+  <!-- ══ HOME ══════════════════════════════════════ -->
+  <section id="sec-home" class="section active">
+    <div class="slideshow" id="slideshow">
+
+      <!-- SLIDE 1 -->
+      <div class="slide active"
+           data-video="https://www.youtube.com/embed/Me8n8PrC0DU">
+        <img src="https://img.youtube.com/vi/Me8n8PrC0DU/maxresdefault.jpg" alt="Projeto 1">
+        <div class="slide-veil">
+          <button class="play-btn" onclick="openModal(this.closest('.slide').dataset.video)" aria-label="Reproduzir vídeo">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="slide"
+           data-video="https://www.youtube.com/embed/6W5VeZxx9YE?start=1630">
+        <img src="https://img.youtube.com/vi/6W5VeZxx9YE/maxresdefault.jpg" alt="Projeto 2">
+        <div class="slide-veil">
+          <button class="play-btn" onclick="openModal(this.closest('.slide').dataset.video)" aria-label="Reproduzir vídeo">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="slide"
+           data-video="https://www.youtube.com/embed/kPS4Lbr1Ma0">
+        <img src="https://img.youtube.com/vi/kPS4Lbr1Ma0/maxresdefault.jpg" alt="Projeto 3">
+        <div class="slide-veil">
+          <button class="play-btn" onclick="openModal(this.closest('.slide').dataset.video)" aria-label="Reproduzir vídeo">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="slide"
+           data-video="https://www.youtube.com/embed/DuY7mSl_0QU">
+        <img src="https://img.youtube.com/vi/DuY7mSl_0QU/maxresdefault.jpg" alt="Projeto 4">
+        <div class="slide-veil">
+          <button class="play-btn" onclick="openModal(this.closest('.slide').dataset.video)" aria-label="Reproduzir vídeo">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div class="slide"
+           data-video="https://www.youtube.com/embed/8snCdCDnhBk?start=749">
+        <img src="https://img.youtube.com/vi/8snCdCDnhBk/maxresdefault.jpg" alt="Projeto 5">
+        <div class="slide-veil">
+          <button class="play-btn" onclick="openModal(this.closest('.slide').dataset.video)" aria-label="Reproduzir vídeo">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Arrows -->
+      <button class="arrow prev" onclick="moveSlide(-1)" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      </button>
+      <button class="arrow next" onclick="moveSlide(1)" aria-label="Próximo">
+        <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="dots" id="dots"></div>
+
+      <!-- Progress -->
+      <div class="slide-progress">
+        <div class="slide-progress-fill" id="progressFill"></div>
+      </div>
+
+    </div><!-- /slideshow -->
+  </section>
+
+  <!-- ══ VÍDEOS ═════════════════════════════════════ -->
+  <section id="sec-videos" class="section">
+    <div class="section-header">
+      <h2>Vídeos</h2>
+      <div class="subtabs">
+        <button class="subtab active" onclick="switchTab('yt', this)">YouTube</button>
+        <button class="subtab" onclick="switchTab('ig', this)">Instagram</button>
+      </div>
+    </div>
+    <div class="videos-grid" id="ytGrid"></div>
+    <div class="ig-grid" id="igGrid" style="display:none;"></div>
+  </section>
+
+  <!-- ══ QUEM SOMOS ════════════════════════════════ -->
+  <section id="sec-about" class="section">
+    <div class="section-header"><h2>Quem Somos</h2></div>
+    <div class="about-wrap">
+      <div class="about-photo">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80" alt="Diretor">
+      </div>
+      <div class="about-copy">
+        <h2>Nome<br>Sobrenome</h2>
+        <p>
+          Substitua este texto pelo texto sobre o diretor. Conte a trajetória, a visão artística
+          e os projetos mais marcantes da carreira. Seja autêntico e envolvente.
+        </p>
+        <p>
+          Mais um parágrafo com informações relevantes sobre o trabalho, prêmios, clientes
+          ou filosofia criativa. Este texto pode ser editado diretamente no HTML.
+        </p>
+        <p>
+          Para entrar em contato, utilize o e-mail
+          <a href="mailto:contato@seusite.com" style="color:rgba(255,255,255,0.5)">contato@seusite.com</a>.
+        </p>
+        <div class="about-tags">
+          <span class="tag">Comerciais</span>
+          <span class="tag">Videoclipes</span>
+          <span class="tag">Documentários</span>
+          <span class="tag">Curtas</span>
+          <span class="tag">Cinema</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── VIDEO MODAL ────────────────────────────────── -->
+<div class="modal" id="modal" onclick="onModalBgClick(event)">
+  <div class="modal-box">
+    <button class="modal-x" onclick="closeModal()" aria-label="Fechar">×</button>
+    <iframe id="modalFrame" src="" allowfullscreen allow="autoplay"></iframe>
+  </div>
+</div>
+
+<!-- ─── LIGHTBOX ──────────────────────────────────── -->
+<div class="lightbox" id="lightbox" onclick="onLbBgClick(event)">
+  <button class="lb-x" onclick="closeLb()" aria-label="Fechar">×</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1,event)" aria-label="Anterior">‹</button>
+  <img id="lbImg" src="" alt="Foto">
+  <button class="lb-nav lb-next" onclick="lbNav(1,event)" aria-label="Próximo">›</button>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════ */
+function nav(id, link) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  link.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+/* ══════════════════════════════════════════════
+   SLIDESHOW
+══════════════════════════════════════════════ */
+const SLIDE_DURATION = 5000; // ms
+let cur = 0, timer, progressTimer;
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const fill   = document.getElementById('progressFill');
+
+// Build dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('active');
+  resetProgress();
+}
+
+function moveSlide(dir) { goTo(cur + dir); }
+
+function resetProgress() {
+  clearInterval(progressTimer);
+  fill.style.transition = 'none';
+  fill.style.width = '0%';
+  // Force reflow
+  void fill.offsetWidth;
+  fill.style.transition = 'width ' + SLIDE_DURATION + 'ms linear';
+  fill.style.width = '100%';
+  clearTimeout(timer);
+  timer = setTimeout(() => moveSlide(1), SLIDE_DURATION);
+}
+
+resetProgress();
+
+/* ══════════════════════════════════════════════
+   VIDEO MODAL
+══════════════════════════════════════════════ */
+function openModal(url) {
+  document.getElementById('modalFrame').src = url + '?autoplay=1';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modalFrame').src = '';
+}
+function onModalBgClick(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+/* ══════════════════════════════════════════════
+   VIDEOS DATA — edite aqui os seus vídeos
+══════════════════════════════════════════════ */
+const VIDEOS = [
+  { type:'yt', thumb:'https://img.youtube.com/vi/6W5VeZxx9YE/maxresdefault.jpg',  src:'https://www.youtube.com/embed/6W5VeZxx9YE?start=1630' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/kPS4Lbr1Ma0/maxresdefault.jpg',  src:'https://www.youtube.com/embed/kPS4Lbr1Ma0' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/DuY7mSl_0QU/maxresdefault.jpg',  src:'https://www.youtube.com/embed/DuY7mSl_0QU' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/8snCdCDnhBk/maxresdefault.jpg',  src:'https://www.youtube.com/embed/8snCdCDnhBk?start=749' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/Me8n8PrC0DU/maxresdefault.jpg',  src:'https://www.youtube.com/embed/Me8n8PrC0DU' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/L2zFO6A6mxk/maxresdefault.jpg',  src:'https://www.youtube.com/embed/L2zFO6A6mxk?start=22' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/ltQ79662j6c/maxresdefault.jpg',  src:'https://www.youtube.com/embed/ltQ79662j6c?start=121' },
+  { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1ZfdTZeu5kkfTFOJDiMMkBBgZBp4SV77_', src:'https://www.instagram.com/p/DW5SIAwMYm0/' },
+  { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1cbxDjIYqR1BSBXcnCboWt1wBNvNqWXRd', src:'https://www.instagram.com/p/DXIWOjtiawk/' },
+  { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1ALpV-IPHOXNvzQlpppU4AgDJAkED8Tb5', src:'https://www.instagram.com/p/DSEShFUEVWv/' },
+  { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1Lw9_c2r_pjqbIai-x8W_ZH4j9XePbbJj', src:'https://www.instagram.com/p/DRVuaFlCYKY/' },
+  { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1HLyYx8Bi-jT3bJpdLOCOeUBmDk2m1vbX', src:'https://www.instagram.com/p/DNOIRkftn_C/' },
+];
+
+// ── Sub-tab switch ──────────────────────────────────
+function switchTab(type, btn) {
+  document.querySelectorAll('.subtab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ytGrid').style.display  = type === 'yt' ? '' : 'none';
+  document.getElementById('igGrid').style.display  = type === 'ig' ? '' : 'none';
+}
+
+// ── Render grids ────────────────────────────────────
+const ytG = document.getElementById('ytGrid');
+const igG = document.getElementById('igGrid');
+
+VIDEOS.forEach(v => {
+  if (v.type === 'yt') {
+    ytG.insertAdjacentHTML('beforeend', `
+      <div class="video-card" onclick="openModal('${v.src}')">
+        <img src="${v.thumb}" loading="lazy">
+        <div class="video-card-overlay">
+          <div class="vc-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+      </div>
+    `);
+  } else {
+    igG.insertAdjacentHTML('beforeend', `
+      <div class="video-card ig-card" onclick="window.open('${v.src}','_blank')">
+        <img
+          src="${v.thumb}"
+          loading="lazy"
+          style="width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;"
+          onerror="this.style.display='none'"
+        >
+        <div class="ig-fallback">
+          <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="white" stroke-width="1.2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/>
+          </svg>
+          <span>Instagram</span>
+        </div>
+        <div class="ig-badge">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="1.8">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white" stroke="none"/>
+          </svg>
+        </div>
+        <div class="video-card-overlay">
+          <div class="vc-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+});
+
+/* ══════════════════════════════════════════════
+   PHOTOS DATA — edite aqui as suas fotos
+══════════════════════════════════════════════ */
+const PHOTOS = [
+  'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=900&q=75',
+  'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=900&q=75',
+  'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=900&q=75',
+  'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?w=900&q=75',
+  'https://images.unsplash.com/photo-1495745966610-2a67f2297e5e?w=900&q=75',
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=75',
+  'https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=900&q=75',
+  'https://images.unsplash.com/photo-1500051638674-ff996a0ec29e?w=900&q=75',
+  'https://images.unsplash.com/photo-1504270997636-07ddfbd48945?w=900&q=75',
+];
+
+let curPhoto = 0;
+const pg = document.getElementById('photosGrid');
+PHOTOS.forEach((src, i) => {
+  pg.insertAdjacentHTML('beforeend', `
+    <div class="photo-item" onclick="openLb(${i})">
+      <img src="${src}" alt="Foto ${i+1}" loading="lazy">
+    </div>
+  `);
+});
+
+/* ══════════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════════ */
+function openLb(i) {
+  curPhoto = i;
+  document.getElementById('lbImg').src = PHOTOS[i];
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+function onLbBgClick(e) {
+  if (e.target === document.getElementById('lightbox')) closeLb();
+}
+function lbNav(dir, e) {
+  e.stopPropagation();
+  curPhoto = (curPhoto + dir + PHOTOS.length) % PHOTOS.length;
+  document.getElementById('lbImg').src = PHOTOS[curPhoto];
+}
+
+/* ══════════════════════════════════════════════
+   KEYBOARD
+══════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox').classList.contains('open');
+  const md = document.getElementById('modal').classList.contains('open');
+  if (lb) {
+    if (e.key === 'ArrowLeft')  lbNav(-1, e);
+    if (e.key === 'ArrowRight') lbNav(1, e);
+    if (e.key === 'Escape')     closeLb();
+  } else if (md) {
+    if (e.key === 'Escape') closeModal();
+  } else {
+    if (e.key === 'ArrowLeft')  moveSlide(-1);
+    if (e.key === 'ArrowRight') moveSlide(1);
+  }
+});
+
+/* ══════════════════════════════════════════════
+   TOUCH / SWIPE (mobile)
+══════════════════════════════════════════════ */
+(function() {
+  let sx = 0;
+  const ss = document.getElementById('slideshow');
+  ss.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  ss.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 50) moveSlide(dx < 0 ? 1 : -1);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
+
       --sidebar-bg: #0f0f0f;
       --text: #ffffff;
       --muted: #666;
