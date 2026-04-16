@@ -129,7 +129,7 @@
     .hamburger {
       display: none;
       position: fixed;
-      top: 16px; left: 16px;
+      top: 28px; left: 16px;
       z-index: 200;
       background: none;
       border: none;
@@ -603,9 +603,10 @@
       z-index: 50;
       box-shadow: 0 1px 0 rgba(0,0,0,0.08);
     }
+    .mobile-home-header a { display: flex; }
     .mobile-home-header img {
-      height: 95px;
-      width: auto;
+      width: 200px;
+      height: auto;
       filter: brightness(0);
     }
 
@@ -646,7 +647,7 @@
     /* ─── RESPONSIVE — MOBILE ─────────────────────── */
     @media (max-width: 560px) {
       .sidebar { width: 100%; padding: 32px 24px; }
-      .hamburger { top: 12px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
+      .hamburger { top: 28px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
 
       /* Home: mostrar header branco + feed empilhado */
       .mobile-home-header { display: flex; }
@@ -738,7 +739,7 @@
     <!-- Logo visível só no mobile -->
     <div class="mobile-home-header">
       <a href="#" onclick="nav('home', document.querySelector('nav a'));return false;">
-        <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo">
+        <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:210px;height:auto;filter:brightness(0);">
       </a>
     </div>
     <div class="slideshow" id="slideshow">
