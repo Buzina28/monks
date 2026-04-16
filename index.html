@@ -301,7 +301,7 @@
     .arrow.next { right: 16px; }
     .arrow svg { width: 28px; height: 28px; stroke: white; fill: none; stroke-width: 1.8; }
 
-    /* Dots */
+    /* Dots — absoluto no desktop, relativo no mobile */
     .dots {
       position: absolute;
       bottom: 26px;
@@ -591,19 +591,55 @@
       .modal-box { width: 96%; }
     }
 
+    /* ─── MOBILE HOME — logo + vídeo contido ─────── */
+    .mobile-home-header {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 24px 14px;
+      background: #0a0a0a;
+    }
+    .mobile-home-header img {
+      height: 32px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
     /* ─── RESPONSIVE — MOBILE ─────────────────────── */
     @media (max-width: 560px) {
       .sidebar { width: 100%; padding: 32px 24px; }
       .hamburger { top: 12px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
 
-      /* Slideshow */
-      .slide-meta { left: 16px; bottom: 70px; right: 16px; }
-      .slide-meta .title { font-size: 18px; }
-      .slide-meta .category { font-size: 9px; }
-      .play-btn { width: 58px; height: 58px; }
-      .dots { right: 16px; bottom: 20px; }
-      .arrow.prev { left: 4px; }
-      .arrow.next { right: 4px; }
+      /* Home: logo visível no topo + vídeo contido */
+      .mobile-home-header { display: flex; }
+      #sec-home { background: #0a0a0a; }
+
+      /* Slideshow contido com proporção 16:9 */
+      .slideshow {
+        height: auto !important;
+        aspect-ratio: 16/9;
+        margin: 0 16px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .slide img { border-radius: 8px; }
+
+      /* Setas menores e mais próximas */
+      .arrow.prev { left: 18px; }
+      .arrow.next { right: 18px; }
+      .arrow svg { width: 20px; height: 20px; }
+
+      /* Dots abaixo do vídeo */
+      .dots {
+        position: relative;
+        bottom: auto; right: auto;
+        justify-content: center;
+        padding: 14px 0 20px;
+      }
+      .slide-progress { display: none; }
+
+      /* Play button menor */
+      .play-btn { width: 54px; height: 54px; }
 
       /* Section header */
       .section-header { padding: 24px 16px 0; }
@@ -673,6 +709,10 @@
 
   <!-- ══ HOME ══════════════════════════════════════ -->
   <section id="sec-home" class="section active">
+    <!-- Logo visível só no mobile -->
+    <div class="mobile-home-header">
+      <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo">
+    </div>
     <div class="slideshow" id="slideshow">
 
       <!-- SLIDE 1 -->
@@ -738,15 +778,14 @@
         <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
       </button>
 
-      <!-- Dots -->
-      <div class="dots" id="dots"></div>
-
       <!-- Progress -->
       <div class="slide-progress">
         <div class="slide-progress-fill" id="progressFill"></div>
       </div>
 
     </div><!-- /slideshow -->
+    <!-- Dots fora do slideshow (visíveis no mobile) -->
+    <div class="dots" id="dots"></div>
   </section>
 
   <!-- ══ VÍDEOS ═════════════════════════════════════ -->
