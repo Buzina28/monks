@@ -591,18 +591,57 @@
       .modal-box { width: 96%; }
     }
 
-    /* ─── MOBILE HOME — logo + vídeo contido ─────── */
+    /* ─── MOBILE HOME HEADER ─────────────────────── */
     .mobile-home-header {
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px 24px 14px;
-      background: #0a0a0a;
+      padding: 18px 24px 16px;
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
     }
     .mobile-home-header img {
-      height: 32px;
+      height: 28px;
       width: auto;
-      filter: brightness(0) invert(1);
+      filter: brightness(0);
+    }
+
+    /* ─── MOBILE FEED (home, mobile only) ─────────── */
+    .mobile-feed {
+      display: none;
+    }
+    .mobile-feed-card {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      cursor: pointer;
+      background: #111;
+      /* ~82% of viewport height so ~18% of next card peeks below */
+      height: 82dvh;
+    }
+    .mobile-feed-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .mobile-feed-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.04) 0%,
+        rgba(0,0,0,0.12) 50%,
+        rgba(0,0,0,0.52) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* ─── RESPONSIVE — MOBILE ─────────────────────── */
@@ -610,33 +649,22 @@
       .sidebar { width: 100%; padding: 32px 24px; }
       .hamburger { top: 12px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
 
-      /* Home: logo visível no topo + vídeo contido */
+      /* Home: mostrar header branco + feed empilhado */
       .mobile-home-header { display: flex; }
       #sec-home { background: #0a0a0a; }
 
-      /* Slideshow contido com proporção 16:9 */
-      .slideshow {
-        height: auto !important;
-        aspect-ratio: 16/9;
-        margin: 0 16px;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .slide img { border-radius: 8px; }
+      /* Esconder slideshow e dots desktop */
+      #sec-home .slideshow,
+      #sec-home .dots { display: none !important; }
 
-      /* Setas menores e mais próximas */
-      .arrow.prev { left: 18px; }
-      .arrow.next { right: 18px; }
-      .arrow svg { width: 20px; height: 20px; }
-
-      /* Dots abaixo do vídeo */
-      .dots {
-        position: relative;
-        bottom: auto; right: auto;
-        justify-content: center;
-        padding: 14px 0 20px;
+      /* Mostrar mobile feed */
+      .mobile-feed {
+        display: block;
+        padding: 12px 16px 32px;
+        background: #0a0a0a;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
-      .slide-progress { display: none; }
 
       /* Play button menor */
       .play-btn { width: 54px; height: 54px; }
@@ -784,8 +812,58 @@
       </div>
 
     </div><!-- /slideshow -->
-    <!-- Dots fora do slideshow (visíveis no mobile) -->
+    <!-- Dots fora do slideshow (visíveis no desktop) -->
     <div class="dots" id="dots"></div>
+
+    <!-- Feed empilhado (apenas mobile) -->
+    <div class="mobile-feed" id="mobileFeed">
+
+      <div class="mobile-feed-card" onclick="openModal('https://www.youtube.com/embed/Me8n8PrC0DU')">
+        <img src="https://img.youtube.com/vi/Me8n8PrC0DU/maxresdefault.jpg" alt="Projeto 1" loading="lazy">
+        <div class="mobile-feed-veil">
+          <button class="play-btn" aria-label="Reproduzir">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-feed-card" onclick="openModal('https://www.youtube.com/embed/6W5VeZxx9YE?start=1630')">
+        <img src="https://img.youtube.com/vi/6W5VeZxx9YE/maxresdefault.jpg" alt="Projeto 2" loading="lazy">
+        <div class="mobile-feed-veil">
+          <button class="play-btn" aria-label="Reproduzir">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-feed-card" onclick="openModal('https://www.youtube.com/embed/kPS4Lbr1Ma0')">
+        <img src="https://img.youtube.com/vi/kPS4Lbr1Ma0/maxresdefault.jpg" alt="Projeto 3" loading="lazy">
+        <div class="mobile-feed-veil">
+          <button class="play-btn" aria-label="Reproduzir">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-feed-card" onclick="openModal('https://www.youtube.com/embed/DuY7mSl_0QU')">
+        <img src="https://img.youtube.com/vi/DuY7mSl_0QU/maxresdefault.jpg" alt="Projeto 4" loading="lazy">
+        <div class="mobile-feed-veil">
+          <button class="play-btn" aria-label="Reproduzir">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-feed-card" onclick="openModal('https://www.youtube.com/embed/8snCdCDnhBk?start=749')">
+        <img src="https://img.youtube.com/vi/8snCdCDnhBk/maxresdefault.jpg" alt="Projeto 5" loading="lazy">
+        <div class="mobile-feed-veil">
+          <button class="play-btn" aria-label="Reproduzir">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /mobile-feed -->
   </section>
 
   <!-- ══ VÍDEOS ═════════════════════════════════════ -->
@@ -913,7 +991,8 @@ resetProgress();
    VIDEO MODAL
 ══════════════════════════════════════════════ */
 function openModal(url) {
-  document.getElementById('modalFrame').src = url + '?autoplay=1';
+  const sep = url.includes('?') ? '&' : '?';
+  document.getElementById('modalFrame').src = url + sep + 'autoplay=1';
   document.getElementById('modal').classList.add('open');
 }
 function closeModal() {
