@@ -596,18 +596,25 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 2px 24px;
-      background: #ffffff;
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 150;
+      background: #ffffff;
       box-shadow: 0 1px 0 rgba(0,0,0,0.08);
     }
     .mobile-home-header a { display: flex; }
     .mobile-home-header img {
-      width: 200px;
+      width: 90px;
       height: auto;
       filter: brightness(0);
+    }
+    /* hamburger dentro do header no mobile */
+    .mobile-home-header .hamburger {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
     }
 
     /* ─── MOBILE FEED (home, mobile only) ─────────── */
@@ -652,6 +659,8 @@
       /* Home: mostrar header branco + feed empilhado */
       .mobile-home-header { display: flex; }
       #sec-home { background: #0a0a0a; }
+      /* Esconder hamburger fixo — fica dentro do header */
+      #hamburger { display: none !important; }
 
       /* Esconder slideshow e dots desktop */
       #sec-home .slideshow,
@@ -710,8 +719,8 @@
 </head>
 <body>
 
-<!-- Hamburger (mobile) -->
-<button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+<!-- Hamburger tablet (fixo, escondido no mobile) -->
+<button class="hamburger" id="hamburgerTablet" onclick="toggleSidebar()" aria-label="Menu">☰</button>
 
 <!-- ─── SIDEBAR ───────────────────────────────────── -->
 <aside class="sidebar" id="sidebar">
@@ -738,6 +747,7 @@
   <section id="sec-home" class="section active">
     <!-- Logo visível só no mobile -->
     <div class="mobile-home-header">
+      <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
       <a href="#" onclick="nav('home', document.querySelector('nav a'));return false;">
         <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:90px;height:auto;filter:brightness(0);">
       </a>
