@@ -501,6 +501,33 @@
     }
 
     /* ═══════════════════════════════════════════════
+       CLIENTES
+    ═══════════════════════════════════════════════ */
+    .clients-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 48px;
+      padding: 60px 50px;
+    }
+    .client-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.55;
+      transition: opacity 0.3s;
+    }
+    .client-item:hover { opacity: 1; }
+    .client-item img {
+      height: 52px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════════════
        CONTATO
     ═══════════════════════════════════════════════ */
     .contact-wrap {
@@ -733,6 +760,8 @@
       .videos-grid { grid-template-columns: 1fr; gap: 2px; }
       .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
 
+      /* Clientes */
+      .clients-grid { padding: 32px 20px; gap: 32px; }
       /* Contato */
       .contact-wrap { padding: 32px 20px; }
 
@@ -781,6 +810,7 @@
       <li><a href="#" class="active" onclick="nav('home',this);return false;">Home</a></li>
       <li><a href="#" onclick="nav('videos',this);return false;">Vídeos</a></li>
       <li><a href="#" onclick="nav('about',this);return false;">Quem Somos</a></li>
+      <li><a href="#" onclick="nav('clients',this);return false;">Clientes</a></li>
       <li><a href="#" onclick="nav('contact',this);return false;">Contato</a></li>
     </ul>
   </nav>
@@ -968,6 +998,31 @@
           <span class="tag">Cinema</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ══ CLIENTES ═════════════════════════════════ -->
+  <section id="sec-clients" class="section">
+    <div class="section-header"><h2>Com quem já trabalhamos</h2></div>
+    <div class="clients-grid">
+
+      <div class="client-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Powerade-logo-2019.svg" alt="Powerade">
+      </div>
+
+      <div class="client-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">
+      </div>
+
+      <div class="client-item">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/5a/Sport_Club_Corinthians_Paulista_crest.svg" alt="Corinthians">
+      </div>
+
+      <div class="client-item">
+        <img src="imgs/logo-athleta.png" alt="Athleta">
+      </div>
+
+
     </div>
   </section>
 
