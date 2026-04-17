@@ -596,7 +596,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 0px 24px;
+      padding: 6px 24px;
       background: #ffffff;
       position: sticky;
       top: 0;
@@ -739,7 +739,7 @@
     <!-- Logo visível só no mobile -->
     <div class="mobile-home-header">
       <a href="#" onclick="nav('home', document.querySelector('nav a'));return false;">
-        <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:210px;height:auto;filter:brightness(0);">
+        <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:130px;height:auto;filter:brightness(0);">
       </a>
     </div>
     <div class="slideshow" id="slideshow">
@@ -1008,6 +1008,9 @@ function onModalBgClick(e) {
    VIDEOS DATA — edite aqui os seus vídeos
 ══════════════════════════════════════════════ */
 const VIDEOS = [
+  { type:'yt', thumb:'https://img.youtube.com/vi/1M3Df8I8xbk/maxresdefault.jpg',  src:'https://www.youtube.com/embed/1M3Df8I8xbk' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/14-RQleVMwI/maxresdefault.jpg',  src:'https://www.youtube.com/embed/14-RQleVMwI' },
+  { type:'yt', thumb:'https://img.youtube.com/vi/jhcyOHU31Mg/maxresdefault.jpg',  src:'https://www.youtube.com/embed/jhcyOHU31Mg' },
   { type:'yt', thumb:'https://img.youtube.com/vi/6W5VeZxx9YE/maxresdefault.jpg',  src:'https://www.youtube.com/embed/6W5VeZxx9YE?start=1630' },
   { type:'yt', thumb:'https://img.youtube.com/vi/kPS4Lbr1Ma0/maxresdefault.jpg',  src:'https://www.youtube.com/embed/kPS4Lbr1Ma0' },
   { type:'yt', thumb:'https://img.youtube.com/vi/DuY7mSl_0QU/maxresdefault.jpg',  src:'https://www.youtube.com/embed/DuY7mSl_0QU' },
@@ -1015,11 +1018,26 @@ const VIDEOS = [
   { type:'yt', thumb:'https://img.youtube.com/vi/Me8n8PrC0DU/maxresdefault.jpg',  src:'https://www.youtube.com/embed/Me8n8PrC0DU' },
   { type:'yt', thumb:'https://img.youtube.com/vi/L2zFO6A6mxk/maxresdefault.jpg',  src:'https://www.youtube.com/embed/L2zFO6A6mxk?start=22' },
   { type:'yt', thumb:'https://img.youtube.com/vi/ltQ79662j6c/maxresdefault.jpg',  src:'https://www.youtube.com/embed/ltQ79662j6c?start=121' },
+  { type:'ig', thumb:'imgs/ig-yuri-camisa.png', src:'https://www.instagram.com/reels/CxdolWsrPoc/' },
   { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1ZfdTZeu5kkfTFOJDiMMkBBgZBp4SV77_', src:'https://www.instagram.com/p/DW5SIAwMYm0/' },
   { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1cbxDjIYqR1BSBXcnCboWt1wBNvNqWXRd', src:'https://www.instagram.com/p/DXIWOjtiawk/' },
   { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1ALpV-IPHOXNvzQlpppU4AgDJAkED8Tb5', src:'https://www.instagram.com/p/DSEShFUEVWv/' },
   { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1Lw9_c2r_pjqbIai-x8W_ZH4j9XePbbJj', src:'https://www.instagram.com/p/DRVuaFlCYKY/' },
   { type:'ig', thumb:'https://lh3.googleusercontent.com/d/1HLyYx8Bi-jT3bJpdLOCOeUBmDk2m1vbX', src:'https://www.instagram.com/p/DNOIRkftn_C/' },
+  { type:'ig', thumb:'imgs/ig-camisa.jpg',    src:'https://www.instagram.com/reels/DSKaJ8DEdd8/' },
+  { type:'ig', thumb:'imgs/ig-pais.jpg',      src:'https://www.instagram.com/reels/DMiC0W8RGTy/' },
+  { type:'ig', thumb:'imgs/ig-powerade1.jpg', src:'https://www.instagram.com/reels/DUJkGUoCRRU/' },
+  { type:'ig', thumb:'imgs/ig-powerade2.jpg', src:'https://www.instagram.com/reels/DUJkGUoCRRU/' },
+  { type:'ig', thumb:'imgs/ig-powerade3.jpg', src:'https://www.instagram.com/reels/DSqxLyOiatH/' },
+  { type:'ig', thumb:'imgs/ig-powerade4.jpg', src:'https://www.instagram.com/reels/DUWgAsoCQDn/' },
+  { type:'ig', thumb:'imgs/ig-powerade5.jpg', src:'https://www.instagram.com/reels/DT-8G18iUUT/' },
+  { type:'ig', thumb:'imgs/ig-powerade6.jpg', src:'https://www.instagram.com/reels/DSI4GNxiW1j/' },
+  { type:'ig', thumb:'imgs/ig-wesley.jpg',    src:'https://www.instagram.com/reels/C6XISUlvylU/' },
+  { type:'ig', thumb:'imgs/ig-yuri1.jpg',     src:'https://www.instagram.com/reels/DCplKOnROfx/' },
+  { type:'ig', thumb:'imgs/ig-yuri2.png',     src:'https://www.instagram.com/reels/DDDveG-thrR/' },
+  { type:'ig', thumb:'imgs/ig-yuri3.jpg',     src:'https://www.instagram.com/reels/DDKlYipxx_-/' },
+  { type:'ig', thumb:'imgs/ig-yuri4.jpg',     src:'https://www.instagram.com/reels/DHUce1VPqAz/' },
+  { type:'ig', thumb:'imgs/ig-yuri5.jpg',     src:'https://www.instagram.com/reels/DJ-m5v5NWDU/' },
 ];
 
 // ── Sub-tab switch ──────────────────────────────────
