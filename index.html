@@ -596,8 +596,8 @@
       display: none;
       align-items: center;
       justify-content: center;
-      position: sticky;
-      top: 0;
+      position: fixed;
+      top: 0; left: 0; right: 0;
       z-index: 150;
       background: #ffffff;
       box-shadow: 0 1px 0 rgba(0,0,0,0.08);
@@ -656,11 +656,10 @@
       .sidebar { width: 100%; padding: 32px 24px; }
       .hamburger { top: 28px; left: 12px; width: 36px; height: 36px; font-size: 16px; }
 
-      /* Home: mostrar header branco + feed empilhado */
+      /* Header fixo em todas as seções */
       .mobile-home-header { display: flex; }
+      .main { padding-top: 56px; }
       #sec-home { background: #0a0a0a; }
-      /* Esconder hamburger fixo — fica dentro do header */
-      #hamburger { display: none !important; }
 
       /* Esconder slideshow e dots desktop */
       #sec-home .slideshow,
@@ -740,18 +739,19 @@
   <div class="sidebar-footer"></div>
 </aside>
 
+<!-- ─── MOBILE HEADER (todas as seções) ──────────── -->
+<div class="mobile-home-header">
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  <a href="#" onclick="nav('home', document.querySelector('nav a'));return false;">
+    <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:90px;height:auto;filter:brightness(0);">
+  </a>
+</div>
+
 <!-- ─── MAIN ──────────────────────────────────────── -->
 <main class="main">
 
   <!-- ══ HOME ══════════════════════════════════════ -->
   <section id="sec-home" class="section active">
-    <!-- Logo visível só no mobile -->
-    <div class="mobile-home-header">
-      <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-      <a href="#" onclick="nav('home', document.querySelector('nav a'));return false;">
-        <img src="https://lh3.googleusercontent.com/d/1VGjMHbZyB1ThY6Fm6j8E5k5XpqYiuY4F" alt="Logo" style="width:90px;height:auto;filter:brightness(0);">
-      </a>
-    </div>
     <div class="slideshow" id="slideshow">
 
       <!-- SLIDE 1 -->
